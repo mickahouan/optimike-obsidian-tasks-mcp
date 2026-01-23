@@ -1,4 +1,4 @@
-# @jfim/obsidian-tasks-mcp
+# optimike-obsidian-tasks-mcp
 
 A Model Context Protocol (MCP) server for extracting and querying Obsidian Tasks from markdown files. Designed to work with Claude via the MCP protocol to enable AI-assisted task management.
 
@@ -7,13 +7,13 @@ A Model Context Protocol (MCP) server for extracting and querying Obsidian Tasks
 You can install globally:
 
 ```bash
-npm install -g @jfim/obsidian-tasks-mcp
+npm install -g optimike-obsidian-tasks-mcp
 ```
 
 Or use with npx without installing:
 
 ```bash
-npx @jfim/obsidian-tasks-mcp /path/to/obsidian/vault
+npx optimike-obsidian-tasks-mcp /path/to/obsidian/vault
 ```
 
 ## Usage
@@ -23,19 +23,45 @@ npx @jfim/obsidian-tasks-mcp /path/to/obsidian/vault
 If installed globally:
 
 ```bash
-obsidian-tasks-mcp /path/to/obsidian/vault
+optimike-obsidian-tasks-mcp /path/to/obsidian/vault
 ```
 
 With npx (recommended):
 
 ```bash
-npx @jfim/obsidian-tasks-mcp /path/to/obsidian/vault
+npx optimike-obsidian-tasks-mcp /path/to/obsidian/vault
 ```
 
 You can specify multiple directories:
 
 ```bash
-npx @jfim/obsidian-tasks-mcp /path/to/obsidian/vault /another/directory
+npx optimike-obsidian-tasks-mcp /path/to/obsidian/vault /another/directory
+```
+
+## HTTP transport (optional)
+
+```bash
+MCP_TRANSPORT_TYPE=http MCP_HTTP_HOST=127.0.0.1 MCP_HTTP_PORT=3011 \
+  npx optimike-obsidian-tasks-mcp /path/to/obsidian/vault
+```
+
+Session mode (default `stateful`):
+- `MCP_HTTP_SESSION_MODE=stateful`
+- `MCP_HTTP_SESSION_MODE=stateless`
+
+## Performance & scope
+
+Env vars (CSV) to limit scope:
+- `MCP_TASKS_INCLUDE_PATHS`
+- `MCP_TASKS_EXCLUDE_PATHS`
+- `MCP_TASKS_MAX_FILES`
+- `MCP_TASKS_CONCURRENCY`
+
+## Inspection (MCP Inspector)
+
+```bash
+npm run inspect:stdio
+npm run inspect:http
 ```
 
 ### Using with Claude
@@ -45,10 +71,10 @@ Add this configuration to your Claude client that supports MCP:
 ```json
 {
   "mcpServers": {
-    "obsidian-tasks": {
+    "optimike-obsidian-tasks": {
       "command": "npx",
       "args": [
-        "@jfim/obsidian-tasks-mcp",
+        "optimike-obsidian-tasks-mcp",
         "/path/to/obsidian/vault"
       ]
     }
@@ -58,7 +84,13 @@ Add this configuration to your Claude client that supports MCP:
 
 ## Features
 
-This MCP server provides the following tools:
+This MCP server provides the following tools and capabilities:
+
+- Status mapping driven by your Tasks plugin config (core + custom statuses)
+- Presets + placeholders (`preset name`, `{{preset.xxx}}`, `{{query.file.*}}`)
+- Relative date filters (EN/FR) and range comparisons
+- Optional Dataview task format parsing
+- Optional frontmatter meta dates with filesystem fallback
 
 ### list_all_tasks
 
@@ -70,12 +102,12 @@ Searches for tasks based on Obsidian Tasks query syntax. Applies multiple filter
 
 Supported query syntax includes:
 - Status filters: `done`, `not done`
-- Date filters: `due today`, `no due date`, `has due date`
-- Tag filters: `has tags`, `no tags`, `tags include #tag`
+- Date filters: `due today`, `scheduled tomorrow`, `start on or before today`, `due in next 7 days`
+- Tag filters: `has tags`, `no tags`, `tag include #tag`
 - Path and description filters
 - Priority filters
 
-For more details, see the full documentation at [GitHub Repository](https://github.com/jfim/obsidian-tasks-mcp).
+For more details, see the full documentation at [GitHub Repository](https://github.com/mickahouan/optimike-obsidian-tasks-mcp).
 
 ## License
 
