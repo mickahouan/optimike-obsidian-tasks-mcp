@@ -16,6 +16,16 @@ Version anglaise : [README.md](README.md)
 - Métadonnées de fichier optionnelles + dates frontmatter (avec fallback)
 - Sortie JSON ou Markdown
 
+## Config du plugin Tasks (source de vérité)
+
+Le serveur lit les réglages Tasks (statuts, presets, filtre global) depuis :
+
+```
+<vault>/.obsidian/plugins/obsidian-tasks/data.json
+```
+
+Assure-toi que ce fichier est à jour.
+
 ## Outils
 
 Ce serveur MCP expose les outils suivants :

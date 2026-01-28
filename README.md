@@ -16,6 +16,16 @@ French version: [README.fr.md](README.fr.md)
 - Optional file metadata + frontmatter meta dates (with fallback to filesystem)
 - Output as JSON or Markdown
 
+## Tasks plugin config (source of truth)
+
+This server reads your Tasks plugin settings (statuses, presets, global filter) from:
+
+```
+<vault>/.obsidian/plugins/obsidian-tasks/data.json
+```
+
+Make sure that file reflects your current Tasks configuration.
+
 ## Tools
 
 This MCP server provides the following tools:
